@@ -1,0 +1,167 @@
+/* Body: handles centering */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  /* Form: increased width, but fits content height */
+  form {
+    width: 95%;
+    max-width: 600px;
+  }
+  
+  /* Card: decreased padding = smaller height */
+  .card {
+    background-color: #ffffff;
+    padding: 30px 100px; /* reduced from 30px or 40px */
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  /* Heading */
+  .card h1 {
+    text-align: center;
+    margin-bottom: 24px;
+    color: #333;
+    font-size: 28px;
+  }
+  
+  /* Label */
+  .card label {
+    margin: 10px 0 5px;
+  }
+  
+  /* <b> tag style */
+  .card b {
+    color: #333;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+  }
+  
+  /* Input Fields */
+  .card input {
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+  }
+  
+  .card input:focus {
+    border-color: #4f46e5;
+  }
+  
+  /* Signup Button */
+  .login-button {
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+  
+  .login-button:hover {
+    background-color: #4338ca;
+  }
+
+  /* OTP Modal */
+.otp-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .otp-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 350px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    text-align: center;
+  }
+  
+  .otp-content h2 {
+    margin-bottom: 20px;
+  }
+  
+  .otp-content input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  .verify-btn, .close-btn {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .verify-btn {
+    background-color: #4f46e5;
+    color: white;
+  }
+  
+  .close-btn {
+    background-color: #ccc;
+  }
+  
+  /* Responsive Tweaks */
+  @media screen and (max-width: 480px) {
+    .form{
+      max-width: 600px;
+    }
+
+    .card {
+      padding: 20px;
+    }
+  
+    .card h1 {
+      font-size: 22px;
+    }
+  
+    .card input {
+      padding: 10px;
+    }
+  
+    .login-button {
+      font-size: 14px;
+      padding: 10px;
+    }
+  
+    .card b {
+      font-size: 13px;
+    }
+  }
