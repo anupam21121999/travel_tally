@@ -2,6 +2,8 @@ import React from "react";
 import "./driverDetails.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
+import { toast, Toaster } from "react-hot-toast";
 
 const Driverdetails1 = () => {
   const navigate = useNavigate();
@@ -10,8 +12,12 @@ const Driverdetails1 = () => {
   const [phone, setphone] = useState("");
   const [address, setaddress] = useState("");
   const [joinDate, setjoinDate] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const submitHandle = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
     try {
       const token = localStorage.getItem("token");
       e.preventDefault();
@@ -39,15 +45,22 @@ const Driverdetails1 = () => {
       if (response.status === 201) {
         navigate(`/driver_details2/${userId}`);
       } else {
-        console.log("Login Failed");
+        toast.error("Login Failed");
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") submitHandle();
   };
 
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="form-container">
         <h2 className="text-center">Driver Details</h2>
         <form onSubmit={submitHandle}>
@@ -81,7 +94,28 @@ const Driverdetails1 = () => {
             type="text"
             placeholder="Joining Date"
           />
-          <button type="submit">Submit</button>
+          {loading ? (
+            <div
+              style={{
+                position: "fixed",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: "rgba(255, 255, 255, 0.7)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                zIndex: 9999,
+              }}
+            >
+              <ClipLoader color="#36d7b7" size={60} />
+            </div>
+          ) : (
+            <button onKeyDown={handleKeyDown} type="submit">
+              Submit
+            </button>
+          )}
         </form>
       </div>
     </>

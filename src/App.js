@@ -14,11 +14,13 @@ import CorporationInfo from "./components/corporation_info/CorporationInfo";
 import Driverdetails1 from "./components/driver_detail/Driverdetails1";
 import Driverdetails2 from "./components/driver_detail/Driverdetails2";
 import Driverdashboard from "./components/driver_detail/Driverdashboard";
+import Navbar from "./components/navbar/Navbar";
 
 function App() {
   return (
     <>
       <Router>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />

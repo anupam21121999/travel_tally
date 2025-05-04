@@ -4,6 +4,8 @@ import "./signup.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setPhone, setToken } from "../../redux/slice/userSlice";
+import { ClipLoader } from "react-spinners";
+import { toast, Toaster } from "react-hot-toast";
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -17,6 +19,7 @@ const Signup = () => {
   const [showOtp, setShowOtp] = useState(false);
   const [otpValue, setOtpValue] = useState("");
   const [passwordErrorState, setPasswordErrorState] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const closeOtpPopup = () => {
     setShowOtp(false);
@@ -25,6 +28,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setShowOtp(true);
+    setLoading(true);
 
     try {
       let newMobile =
@@ -58,10 +62,12 @@ const Signup = () => {
         localStorage.setItem("token", data.token);
         dispatch(setToken(data.token));
       } else {
-        console.log("Register Failed");
+        toast.error("Register Failed");
       }
     } catch (error) {
       console.log("Error", error);
+    } finally {
+      setLoading(false);
     }
 
     if (password === cnfPassword) {
@@ -116,6 +122,7 @@ const Signup = () => {
 
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="login">
         <div className="container">
           <form onSubmit={handleSubmit}>
@@ -196,9 +203,28 @@ const Signup = () => {
                 type="number"
                 placeholder="Mobile No."
               />
-              <button className="login-button" onKeyDown={handleKeyDown}>
-                Signup
-              </button>
+              {loading ? (
+                <div
+                  style={{
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: "rgba(255, 255, 255, 0.7)",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    zIndex: 9999,
+                  }}
+                >
+                  <ClipLoader color="#36d7b7" size={60} />
+                </div>
+              ) : (
+                <button className="login-button" onKeyDown={handleKeyDown}>
+                  Signup
+                </button>
+              )}
             </div>
           </form>
 

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const corpDetails = localStorage.getItem("corpName");
-  console.log(corpDetails);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -11,32 +10,54 @@ const Navbar = () => {
   };
 
   return (
-    <>
-      <nav>
-        <ul className="flex items-center justify-between px-6 py-4 shadow-md bg-blue-300 mt-5 text-lg font-bold">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-gray-900 to-gray-950 shadow-md">
+      <ul className="flex flex-wrap items-center justify-between px-6 py-4 text-white text-lg font-semibold">
+        <li className="text-xl font-bold">{corpDetails}</li>
+        <div className="flex gap-10 flex-wrap justify-end">
           <li>
-            <h5>{corpDetails}</h5>
+            <Link
+              to="/billing_system"
+              className="hover:text-yellow-200 transition-colors duration-200"
+            >
+              Billing System
+            </Link>
           </li>
           <li>
-            <Link to="/billing_system">Billing System</Link>
+            <Link
+              to="/service_record"
+              className="hover:text-yellow-200 transition-colors duration-200"
+            >
+              Service Record
+            </Link>
           </li>
           <li>
-            <Link to="/service_record">Service Record</Link>
+            <Link
+              to="/display_bills"
+              className="hover:text-yellow-200 transition-colors duration-200"
+            >
+              Display Bills
+            </Link>
           </li>
           <li>
-            <Link to="/display_bills">Display Bills</Link>
+            <Link
+              to="/driver_details1"
+              className="hover:text-yellow-200 transition-colors duration-200"
+            >
+              Driver Details
+            </Link>
           </li>
           <li>
-            <Link to="/driver_details1">Driver Details</Link>
-          </li>
-          <li>
-            <Link to="/" onClick={() => handleLogout()}>
+            <Link
+              to="/"
+              onClick={handleLogout}
+              className="hover:text-red-200 transition-colors duration-200"
+            >
               Logout
             </Link>
           </li>
-        </ul>
-      </nav>
-    </>
+        </div>
+      </ul>
+    </nav>
   );
 };
 

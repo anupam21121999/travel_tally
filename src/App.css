@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  padding-top: 72px; /* Adjust based on your nav height */
+  background-image: linear-gradient(#FFF8F8, #c3c5cc);
+}

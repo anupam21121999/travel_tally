@@ -3,14 +3,18 @@ import "./login.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
+import { toast, Toaster } from "react-hot-toast";
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await fetch(
@@ -43,12 +47,17 @@ const Login = () => {
           const data2 = await response2.json();
           localStorage.setItem("corpName", data2.corpName);
         }
-        navigate("/dashboard");
+        setTimeout(() => {
+          toast.success("Login Successful");
+          navigate("/dashboard");
+        }, 1000);
       } else {
-        console.log("Login Failed");
+        toast.error("Login Failed");
       }
     } catch (error) {
-      console.log("Login Error:", error);
+      toast.error("Login Error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,6 +69,7 @@ const Login = () => {
 
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="login">
         <div className="container">
           <form onSubmit={handleSubmit}>
@@ -88,9 +98,28 @@ const Login = () => {
                   Forgot Password?
                 </Link>
               </div>
-              <button className="login-button" onKeyDown={handleKeyDown}>
-                Login
-              </button>
+              {loading ? (
+                <div
+                  style={{
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: "rgba(255, 255, 255, 0.7)",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    zIndex: 9999,
+                  }}
+                >
+                  <ClipLoader color="#36d7b7" size={60} />
+                </div>
+              ) : (
+                <button className="login-button" onKeyDown={handleKeyDown}>
+                  Login
+                </button>
+              )}
               <button type="button" className="reset-button">
                 Reset Password
               </button>
