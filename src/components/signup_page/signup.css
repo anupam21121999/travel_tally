@@ -65,7 +65,7 @@ body {
   }
   
   /* Signup Button */
-  .login-button {
+  .logon-button {
     background-color: #4f46e5;
     color: white;
     border: none;
@@ -78,7 +78,7 @@ body {
     width: 100%;
   }
   
-  .login-button:hover {
+  .logon-button:hover {
     background-color: #4338ca;
   }
 
@@ -155,7 +155,7 @@ body {
       padding: 10px;
     }
   
-    .login-button {
+    .logon-button {
       font-size: 14px;
       padding: 10px;
     }

@@ -123,7 +123,7 @@ const Signup = () => {
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
-      <div className="login">
+      <div className="logon">
         <div className="container">
           <form onSubmit={handleSubmit}>
             <div className="card">
@@ -221,7 +221,7 @@ const Signup = () => {
                   <ClipLoader color="#36d7b7" size={60} />
                 </div>
               ) : (
-                <button className="login-button" onKeyDown={handleKeyDown}>
+                <button className="logon-button" onKeyDown={handleKeyDown}>
                   Signup
                 </button>
               )}

@@ -24,7 +24,7 @@ body {
   /* Card: decreased padding = smaller height */
   .card {
     background-color: #ffffff;
-    padding: 30px 100px; /* reduced from 30px or 40px */
+    /* padding: 80px 100px; reduced from 30px or 40px */
     border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     display: flex;

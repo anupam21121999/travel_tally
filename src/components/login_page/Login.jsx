@@ -53,7 +53,7 @@ const Login = () => {
           navigate("/");
         }, 1000);
       } else {
-        toast.error("Login Failed");
+        toast.error(data.message);
       }
     } catch (error) {
       toast.error("Login Error:", error);
@@ -68,7 +68,8 @@ const Login = () => {
       const next = inputRefs[index + 1];
       if (next && next.current) {
         next.current.focus();
-      } else {
+      } 
+      if (index ===1) {
         // If it's the last input, submit the form
         document.querySelector("form").requestSubmit();
       }
@@ -81,8 +82,8 @@ const Login = () => {
       <div className="login">
         <div className="container">
           <form onSubmit={handleSubmit}>
-            <div className="card">
-              <h1>Travel Tally</h1>
+            <div className="login-card p-10">
+              <h1 className="text-blue-500">Travel Tally</h1>
               <label>
                 <b>Email</b>
               </label>
@@ -136,11 +137,8 @@ const Login = () => {
                   Login
                 </button>
               )}
-              <button type="button" className="reset-button">
-                Reset Password
-              </button>
-              <div className="links" style={{ marginTop: "15px" }}>
-                <a href=" ">New User?</a>
+              <div className="links">
+                <a href="/signup">New User?</a>
               </div>
             </div>
           </form>
