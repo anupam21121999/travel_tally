@@ -53,7 +53,7 @@ const Driverdetails1 = () => {
       if (response.status === 201) {
         navigate(`/driver_details2/${userId}`);
       } else {
-        toast.error(response.message);
+        toast.error(data.message);
       }
     } catch (error) {
       console.log(error);
@@ -68,7 +68,8 @@ const Driverdetails1 = () => {
       const next = inputRefs[index + 1];
       if (next && next.current) {
         next.current.focus();
-      } else {
+      }
+      if (index === 1) {
         document.querySelector("form").requestSubmit();
       }
     }

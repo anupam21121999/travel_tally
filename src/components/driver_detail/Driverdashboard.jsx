@@ -134,65 +134,97 @@ const Driverdashboard = () => {
         ) : (
           <p className="text-center text-lg text-gray-500">No drivers found.</p>
         )}
+      </div>
 
-        {/* Modal */}
-        {showModal && selectedDriver && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white rounded-lg p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto relative">
-              <div className="relative flex justify-end items-center gap-4 p-2 rounded-md">
-                <GoPencil className="size-6 cursor-pointer hover:text-black text-xl font-bold" />
-                <MdDeleteOutline
-                  onClick={() => deleteDrivers(selectedDriver._id)}
-                  className="size-6 cursor-pointer hover:text-black text-xl font-bold"
-                />
-                <button
-                  onClick={closeModal}
-                  className="text-white hover:text-black text-xl font-bold"
-                >
-                  ✕
-                </button>
-              </div>
-              <h2 className="text-xl font-bold mb-4">
-                {selectedDriver.firstName} {selectedDriver.lastName}'s Documents
-              </h2>
-              <div className="space-y-4">
+      {/* Modal */}
+      {showModal && selectedDriver && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg p-6 max-w-lg w-full max-h-[100vh] overflow-y-auto relative">
+            <div className="relative flex justify-end items-center gap-4 p-2 rounded-md">
+              <GoPencil className="size-6 cursor-pointer hover:text-black text-xl font-bold" />
+              <MdDeleteOutline
+                onClick={() => deleteDrivers(selectedDriver._id)}
+                className="size-6 cursor-pointer hover:text-black text-xl font-bold"
+              />
+              <button
+                onClick={closeModal}
+                className="text-white hover:text-black text-xl font-bold"
+              >
+                ✕
+              </button>
+            </div>
+            <h1 className="font-semibold">
+              {selectedDriver.firstName} {selectedDriver.lastName} Documents
+            </h1>
+            <div className="m-2">
+              <h3 contentEditable={true}>
+                First Name: {selectedDriver.firstName}
+              </h3>
+              <h3 contentEditable={true}>
+                Last Name: {selectedDriver.lastName}
+              </h3>
+              <h3 contentEditable={true}>Address: {selectedDriver.address}</h3>
+              <h3 contentEditable={true}>Phone: {selectedDriver.phone}</h3>
+              <h3 contentEditable={true}>
+                Joining date: {selectedDriver.joiningDate}
+              </h3>
+            </div>
+            <div className="flex flex-row gap-10 w-auto">
+              {selectedDriver.aadhar[0] == null ? (
+                <div></div>
+              ) : (
                 <div>
                   <p className="font-medium">Aadhar Front:</p>
                   <img
                     src={selectedDriver.aadhar[0]}
                     alt="Aadhar Front"
-                    className="w-full h-auto rounded"
+                    className="w-52 h-52 rounded"
                   />
                 </div>
+              )}
+              {selectedDriver.aadhar[1] == null ? (
+                <div></div>
+              ) : (
                 <div>
                   <p className="font-medium">Aadhar Back:</p>
                   <img
                     src={selectedDriver.aadhar[1]}
                     alt="Aadhar Back"
-                    className="w-full h-auto rounded"
+                    className="w-52 h-52 rounded"
                   />
                 </div>
+              )}
+            </div>
+            <div className="flex flex-row gap-10 w-auto">
+              {selectedDriver.license[0] == null ? (
+                <div></div>
+              ) : (
                 <div>
                   <p className="font-medium">License Front:</p>
                   <img
                     src={selectedDriver.license[0]}
                     alt="License Front"
-                    className="w-full h-auto rounded"
+                    className="w-52 h-52 rounded"
                   />
                 </div>
+              )}
+              {selectedDriver.license[1] == null ? (
+                <div></div>
+              ) : (
                 <div>
                   <p className="font-medium">License Back:</p>
                   <img
                     src={selectedDriver.license[1]}
                     alt="License Back"
-                    className="w-full h-auto rounded"
+                    className="w-52 h-52 rounded-md"
                   />
                 </div>
-              </div>
+              )}
             </div>
+            <button className="mt-2 justify-center">Update</button>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
 };
