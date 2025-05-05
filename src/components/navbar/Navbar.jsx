@@ -48,7 +48,7 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              to="/"
+              to="/login"
               onClick={handleLogout}
               className="hover:text-red-200 transition-colors duration-200"
             >
