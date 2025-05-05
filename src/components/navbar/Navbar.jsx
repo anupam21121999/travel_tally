@@ -40,7 +40,7 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              to="/driver_details1"
+              to="/driver_dashboard"
               className="hover:text-yellow-200 transition-colors duration-200"
             >
               Driver Details

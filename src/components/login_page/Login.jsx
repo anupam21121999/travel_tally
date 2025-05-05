@@ -1,6 +1,6 @@
 import React from "react";
 import "./login.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
@@ -11,6 +11,7 @@ const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
+  const inputRefs = [useRef(null), useRef(null), useRef(null)];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,9 +62,16 @@ const Login = () => {
     }
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e, index) => {
     if (e.key === "Enter") {
-      handleSubmit();
+      e.preventDefault();
+      const next = inputRefs[index + 1];
+      if (next && next.current) {
+        next.current.focus();
+      } else {
+        // If it's the last input, submit the form
+        document.querySelector("form").requestSubmit();
+      }
     }
   };
 
@@ -79,6 +87,8 @@ const Login = () => {
                 <b>Email</b>
               </label>
               <input
+                ref={inputRefs[0]}
+                onKeyDown={(e) => handleKeyDown(e, 0)}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
@@ -88,6 +98,8 @@ const Login = () => {
                 <b>Password</b>
               </label>
               <input
+                ref={inputRefs[1]}
+                onKeyDown={(e) => handleKeyDown(e, 1)}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 type="password"
@@ -116,7 +128,11 @@ const Login = () => {
                   <ClipLoader color="#36d7b7" size={60} />
                 </div>
               ) : (
-                <button className="login-button" onKeyDown={handleKeyDown}>
+                <button
+                  className="login-button"
+                  ref={inputRefs[2]}
+                  type="submit"
+                >
                   Login
                 </button>
               )}
