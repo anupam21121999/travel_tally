@@ -50,7 +50,7 @@ const Login = () => {
         }
         setTimeout(() => {
           toast.success("Login Successful");
-          navigate("/dashboard");
+          navigate("/");
         }, 1000);
       } else {
         toast.error("Login Failed");
