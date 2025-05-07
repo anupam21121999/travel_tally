@@ -12,6 +12,12 @@ const Driverdashboard = () => {
   const [selectedDriver, setSelectedDriver] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [search, setSearch] = useState("");
+  const [toggleButton, setToggleButton] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [joiningDate, setJoiningDate] = useState("");
 
   const getDriverDetails = async () => {
     try {
@@ -42,6 +48,11 @@ const Driverdashboard = () => {
 
   const openModal = (driver) => {
     setSelectedDriver(driver);
+    setFirstName(driver.firstName);
+    setLastName(driver.lastName);
+    setAddress(driver.address);
+    setPhone(driver.phone);
+    setJoiningDate(driver.joiningDate);
     setShowModal(true);
   };
 
@@ -82,6 +93,43 @@ const Driverdashboard = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const updateDriver = async (id) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_DOMAIN}/api/driver/update/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            firstName: firstName,
+            lastName: lastName,
+            address: address,
+            phone: phone,
+            joiningDate: joiningDate,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (response.status === 200) {
+        console.log("Updated Successfully");
+        getDriverDetails();
+        setToggleButton(false);
+        closeModal();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const visibleElement = () => {
+    setToggleButton((prev) => !prev);
   };
 
   return (
@@ -141,7 +189,10 @@ const Driverdashboard = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg p-6 max-w-lg w-full max-h-[100vh] overflow-y-auto relative">
             <div className="relative flex justify-end items-center gap-4 p-2 rounded-md">
-              <GoPencil className="size-6 cursor-pointer hover:text-black text-xl font-bold" />
+              <GoPencil
+                onClick={() => visibleElement()}
+                className="size-6 cursor-pointer hover:text-black text-xl font-bold"
+              />
               <MdDeleteOutline
                 onClick={() => deleteDrivers(selectedDriver._id)}
                 className="size-6 cursor-pointer hover:text-black text-xl font-bold"
@@ -156,19 +207,57 @@ const Driverdashboard = () => {
             <h1 className="font-semibold">
               {selectedDriver.firstName} {selectedDriver.lastName} Documents
             </h1>
-            <div className="m-2">
-              <h3 contentEditable={true}>
-                First Name: {selectedDriver.firstName}
-              </h3>
-              <h3 contentEditable={true}>
-                Last Name: {selectedDriver.lastName}
-              </h3>
-              <h3 contentEditable={true}>Address: {selectedDriver.address}</h3>
-              <h3 contentEditable={true}>Phone: {selectedDriver.phone}</h3>
-              <h3 contentEditable={true}>
-                Joining date: {selectedDriver.joiningDate}
-              </h3>
-            </div>
+            {toggleButton ? (
+              <div className="m-2 space-y-2">
+                <input
+                  type="text"
+                  className="border p-1 w-full"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  placeholder="First Name"
+                />
+                <input
+                  type="text"
+                  className="border p-1 w-full"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  placeholder="Last Name"
+                />
+                <input
+                  type="text"
+                  className="border p-1 w-full"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="Address"
+                />
+                <input
+                  type="text"
+                  className="border p-1 w-full"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="Phone"
+                />
+                <input
+                  type="date"
+                  className="border p-1 w-full"
+                  value={joiningDate?.substring(0, 10)}
+                  onChange={(e) => setJoiningDate(e.target.value)}
+                  placeholder="Joining Date"
+                />
+              </div>
+            ) : (
+              <div className="m-2 space-y-1">
+                <h3>First Name: {selectedDriver.firstName}</h3>
+                <h3>Last Name: {selectedDriver.lastName}</h3>
+                <h3>Address: {selectedDriver.address}</h3>
+                <h3>Phone: {selectedDriver.phone}</h3>
+                <h3>
+                  Joining date:{" "}
+                  {new Date(selectedDriver.joiningDate).toLocaleDateString()}
+                </h3>
+              </div>
+            )}
+
             <div className="flex flex-row gap-10 w-auto">
               {selectedDriver.aadhar[0] == null ? (
                 <div></div>
@@ -221,7 +310,16 @@ const Driverdashboard = () => {
                 </div>
               )}
             </div>
-            <button className="mt-2 justify-center">Update</button>
+            {toggleButton ? (
+              <button
+                onClick={() => updateDriver(selectedDriver._id)}
+                className="mt-2 justify-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              >
+                Update
+              </button>
+            ) : (
+              <div></div>
+            )}
           </div>
         </div>
       )}
