@@ -18,6 +18,8 @@ const Driverdashboard = () => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [joiningDate, setJoiningDate] = useState("");
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+  const [showConfirmPopup1, setShowConfirmPopup1] = useState(false);
 
   const getDriverDetails = async () => {
     try {
@@ -194,9 +196,35 @@ const Driverdashboard = () => {
                 className="size-6 cursor-pointer hover:text-black text-xl font-bold"
               />
               <MdDeleteOutline
-                onClick={() => deleteDrivers(selectedDriver._id)}
+                onClick={() => setShowConfirmPopup1(true)}
                 className="size-6 cursor-pointer hover:text-black text-xl font-bold"
               />
+              {showConfirmPopup1 && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                  <div className="bg-white p-6 rounded-lg shadow-lg text-center max-w-xs">
+                    <h2 className="text-lg font-semibold mb-4">
+                      Are you sure?
+                    </h2>
+                    <div className="flex justify-center gap-4">
+                      <button
+                        onClick={() => {
+                          deleteDrivers(selectedDriver._id);
+                          setShowConfirmPopup1(false);
+                        }}
+                        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                      >
+                        Yes
+                      </button>
+                      <button
+                        onClick={() => setShowConfirmPopup1(false)}
+                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                      >
+                        No
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
               <button
                 onClick={closeModal}
                 className="text-white hover:text-black text-xl font-bold"
@@ -204,7 +232,7 @@ const Driverdashboard = () => {
                 ✕
               </button>
             </div>
-            <h1 className="font-semibold">
+            <h1 className="font-semibold mb-2">
               {selectedDriver.firstName} {selectedDriver.lastName} Documents
             </h1>
             {toggleButton ? (
@@ -312,13 +340,37 @@ const Driverdashboard = () => {
             </div>
             {toggleButton ? (
               <button
-                onClick={() => updateDriver(selectedDriver._id)}
+                onClick={() => setShowConfirmPopup(true)}
                 className="mt-2 justify-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
               >
                 Update
               </button>
             ) : (
               <div></div>
+            )}
+            {showConfirmPopup && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                <div className="bg-white p-6 rounded-lg shadow-lg text-center max-w-xs">
+                  <h2 className="text-lg font-semibold mb-4">Are you sure?</h2>
+                  <div className="flex justify-center gap-4">
+                    <button
+                      onClick={() => {
+                        updateDriver(selectedDriver._id);
+                        setShowConfirmPopup(false);
+                      }}
+                      className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                    >
+                      Yes
+                    </button>
+                    <button
+                      onClick={() => setShowConfirmPopup(false)}
+                      className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                    >
+                      No
+                    </button>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         </div>
