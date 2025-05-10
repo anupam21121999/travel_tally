@@ -19,6 +19,8 @@ import Driverdetails1 from "./components/driver_detail/Driverdetails1";
 import Driverdetails2 from "./components/driver_detail/Driverdetails2";
 import Driverdashboard from "./components/driver_detail/Driverdashboard";
 import ProtectedRoute from "./components/protected/protected";
+import Vehicledashboard from "./components/vehicle_details/Vehicledashboard";
+import Vehicledetail from "./components/vehicle_details/Vehicledetail";
 
 function App() {
   return (
@@ -39,6 +41,8 @@ function App() {
             <Route path="/driver_details1" element={<Driverdetails1 />} />
             <Route path="/driver_details2/:id" element={<Driverdetails2 />} />
             <Route path="/driver_dashboard" element={<Driverdashboard />} />
+            <Route path="/vehicle_dashboard" element={<Vehicledashboard />} />
+            <Route path="/vehicle_detail" element={<Vehicledetail />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

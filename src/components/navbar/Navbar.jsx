@@ -48,6 +48,14 @@ const Navbar = () => {
           </li>
           <li>
             <Link
+              to="/vehicle_dashboard"
+              className="hover:text-yellow-200 transition-colors duration-200"
+            >
+              Vehicle Details
+            </Link>
+          </li>
+          <li>
+            <Link
               to="/login"
               onClick={handleLogout}
               className="hover:text-red-200 transition-colors duration-200"
