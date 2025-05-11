@@ -71,7 +71,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    const root = window.document.documentElement;
+    const root = document.documentElement;
     if (darkMode) {
       root.classList.add("dark");
     } else {
@@ -86,8 +86,17 @@ const Navbar = () => {
           <FaCar className="text-white text-2xl"/>
           <span className="font-sans font-bold text-2xl">{navTitle}</span>
         </div>
-      {navTitle!="Travel Tally" && <SlideTabs/>}
-      {navTitle!="Travel Tally" && <button
+      {navTitle!=="Travel Tally" && <SlideTabs/>}
+      <div className="flex items-center space-x-4">
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className="text-white p-3 bg-gray-900 hover:bg-gray-500 transition rounded-full mr-3"
+          title="Toggle Dark Mode"
+        >
+          {darkMode ? "Light" : "Dark"}
+        </button>
+        </div>
+      {navTitle!=="Travel Tally" && <button
           onClick={() => setShowConfirm(true)}
           className="text-white p-3 bg-gray-900 hover:bg-gray-500 transition rounded-full mr-3"
           title="Log out"
