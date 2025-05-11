@@ -249,6 +249,7 @@ const Vehicledashboard = () => {
               {toggleButton ? (
                 <div className="max-w-md mx-auto bg-white p-6 rounded-2xl shadow-lg">
                   <div className="mb-6 text-center">
+                    <label>Model:</label>
                     <input
                       className="w-full text-2xl font-bold text-gray-800 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 mb-2 text-center"
                       value={model}
