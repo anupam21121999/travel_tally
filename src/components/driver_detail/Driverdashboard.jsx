@@ -156,7 +156,7 @@ const Driverdashboard = () => {
       transition={pageTransition}
     >
       <Toaster position="bottom-center" reverseOrder={false} />
-      <div className="min-h-screen flex justify-center items-start pt-8 mt-40">
+      <div className="min-h-screen flex justify-center items-start pt-8 mt-52">
         <div className="w-full max-w-6xl">
           {/* Top Search & Add Driver Section */}
           <div className="flex flex-row gap-2 w-auto h-auto">
