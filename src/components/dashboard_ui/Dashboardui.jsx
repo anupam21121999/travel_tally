@@ -5,7 +5,7 @@ import "./dashboardui.css";
 const Dashboardui = () => {
   return (
     <>
-      <div className="split-screen">
+      <div className="bg-white text-black dark:bg-gray-800 dark:text-white split-screen">
         <div className="left-side">
           <img src={crysta} alt="Sample" className="image" />
         </div>
