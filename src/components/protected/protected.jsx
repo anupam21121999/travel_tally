@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import Navbar from "../navbar/Navbar"
+import Navbar from "../navbar/Navbar";
 import { jwtDecode } from "jwt-decode";
 
 const isTokenValid = (token) => {
@@ -21,8 +21,10 @@ const ProtectedRoute = () => {
 
   return (
     <>
-      <Navbar />
-      <Outlet />
+      <div className="bg-white text-black dark:bg-gray-900 dark:text-white transition-all">
+        <Navbar />
+        <Outlet />
+      </div>
     </>
   );
 };
