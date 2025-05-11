@@ -2,6 +2,19 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { motion } from 'framer-motion';
+
+const pageVariants = {
+  initial: { x: "100vw", opacity: 0 },
+  in: { x: 0, opacity: 1 },
+  out: { x: "-100vw", opacity: 0 },
+};
+
+const pageTransition = {
+  type: "tween",
+  ease: "easeInOut",
+  duration: 0.5,
+};
 
 const Vehicledashboard = () => {
   const token = localStorage.getItem("token");
@@ -42,8 +55,13 @@ const Vehicledashboard = () => {
   );
 
   return (
-    <>
-      <Toaster position="top-center" reverseOrder={false} />
+    <motion.div
+    initial="initial"
+    animate="in"
+    exit="out"
+    variants={pageVariants}
+    transition={pageTransition}>
+      <Toaster position="bottom-center" reverseOrder={false} />
       <div className="p-4">
         <div className="flex flex-row gap-2 w-auto h-auto">
           <input
@@ -78,7 +96,7 @@ const Vehicledashboard = () => {
           ))}
         </div>
       </div>
-    </>
+    </motion.div>
   );
 };
 

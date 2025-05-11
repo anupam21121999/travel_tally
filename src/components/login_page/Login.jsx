@@ -5,12 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { toast, Toaster } from "react-hot-toast";
+import { useNavTitle } from "../navbar/NavTitleContext"
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
+  const { updateNavTitle } = useNavTitle();
   const inputRefs = [useRef(null), useRef(null), useRef(null)];
 
   const handleSubmit = async (e) => {
@@ -46,7 +48,7 @@ const Login = () => {
             }
           );
           const data2 = await response2.json();
-          localStorage.setItem("corpName", data2.corpName);
+          updateNavTitle(data2.corpName);
         }
         setTimeout(() => {
           toast.success("Login Successful");

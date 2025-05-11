@@ -4,6 +4,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoAddOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 import { toast, Toaster } from "react-hot-toast";
+import { motion } from 'framer-motion';
+
+const pageVariants = {
+  initial: { x: "100vw", opacity: 0 },
+  in: { x: 0, opacity: 1 },
+  out: { x: "-100vw", opacity: 0 },
+};
+
+const pageTransition = {
+  type: "tween",
+  ease: "easeInOut",
+  duration: 0.5,
+};
 
 const Driverdashboard = () => {
   const navigate = useNavigate();
@@ -135,7 +148,12 @@ const Driverdashboard = () => {
   };
 
   return (
-    <>
+    <motion.div
+    initial="initial"
+    animate="in"
+    exit="out"
+    variants={pageVariants}
+    transition={pageTransition}>
       <Toaster position="top-center" reverseOrder={false} />
       <div className="mt-6 px-4 flex flex-col items-center">
         <div className="w-full max-w-4xl flex justify-between items-center gap-4">
@@ -375,7 +393,7 @@ const Driverdashboard = () => {
           </div>
         </div>
       )}
-    </>
+    </motion.div>
   );
 };
 
