@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoAddOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 import { toast, Toaster } from "react-hot-toast";
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence} from 'framer-motion';
 
 const pageVariants = {
   initial: { x: "100vw", opacity: 0 },
@@ -155,7 +155,7 @@ const Driverdashboard = () => {
     exit="out"
     variants={pageVariants}
     transition={pageTransition}>
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position="bottom-center" reverseOrder={false} />
       <div className="mt-6 px-4 flex flex-col items-center">
         <div className="w-full max-w-4xl flex justify-between items-center gap-4">
           <input
@@ -455,7 +455,7 @@ const Driverdashboard = () => {
           </div>
         )}
       </AnimatePresence>
-    </>
+    </motion.div>
   );
 };
 
