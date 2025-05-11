@@ -151,59 +151,62 @@ const Vehicledashboard = () => {
 
   return (
     <motion.div
-    initial="initial"
-    animate="in"
-    exit="out"
-    variants={pageVariants}
-    transition={pageTransition}>
+      initial="initial"
+      animate="in"
+      exit="out"
+      variants={pageVariants}
+      transition={pageTransition}
+    >
       <Toaster position="bottom-center" reverseOrder={false} />
-      <div className="p-4">
-        <div className="flex flex-row gap-2 w-auto h-auto">
-          <input
-            className="flex-grow h-10 rounded-lg border px-3"
-            type="text"
-            placeholder="Search vehicles..."
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <Link to="/vehicle_detail">
-            <button className="h-10 px-4 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors">
-              Add Vehicle Details
-            </button>
-          </Link>
-        </div>
-        <div className="container mx-auto px-4 py-6">
-          {filteredItems.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredItems.map((item) => (
-                <div
-                  key={item._id}
-                  onClick={() => open(item)}
-                  className="bg-white shadow-md rounded-xl p-4 border hover:shadow-lg transition-shadow duration-300"
-                >
-                  <h3 className="text-lg font-semibold text-gray-800">
-                    Model: {item.model}
-                  </h3>
-                  <p className="text-gray-600">Color: {item.color}</p>
-                  <p className="text-gray-600">Year: {item.year}</p>
-                  <p className="text-gray-600">
-                    Registration No: {item.registrationNumber}
-                  </p>
-                  <p className="text-gray-600">Total KMs: {item.totalKms}</p>
-                  <p className="text-gray-600">Mileage: {item.mileage}</p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-center text-lg text-gray-500">
-              No Vehicles Found.
-            </p>
-          )}
+      <div className="min-h-screen flex justify-center items-start pt-8 mt-40">
+        <div className="p-4 w-full max-w-6xl">
+          <div className="flex flex-row gap-2 w-auto h-auto">
+            <input
+              className="flex-grow h-10 rounded-lg border px-3"
+              type="text"
+              placeholder="Search vehicles..."
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <Link to="/vehicle_detail">
+              <button className="h-10 px-4 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors">
+                Add Vehicle Details
+              </button>
+            </Link>
+          </div>
+          <div className="container mx-auto px-4 py-6">
+            {filteredItems.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {filteredItems.map((item) => (
+                  <div
+                    key={item._id}
+                    onClick={() => open(item)}
+                    className="bg-white shadow-md rounded-xl p-4 border hover:shadow-lg transition-shadow duration-300"
+                  >
+                    <h3 className="text-lg font-semibold text-gray-800">
+                      Model: {item.model}
+                    </h3>
+                    <p className="text-gray-600">Color: {item.color}</p>
+                    <p className="text-gray-600">Year: {item.year}</p>
+                    <p className="text-gray-600">
+                      Registration No: {item.registrationNumber}
+                    </p>
+                    <p className="text-gray-600">Total KMs: {item.totalKms}</p>
+                    <p className="text-gray-600">Mileage: {item.mileage}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-lg text-gray-500">
+                No Vehicles Found.
+              </p>
+            )}
+          </div>
         </div>
       </div>
 
       <AnimatePresence>
         {showModal && selectedVehicle && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="fixed inset-0 z-50 flex justify-center items-start pt-24 bg-black bg-opacity-50 overflow-y-auto">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -311,7 +314,6 @@ const Vehicledashboard = () => {
                         onChange={(e) => setKm(e.target.value)}
                       />
                     </div>
-
                     <div className="flex flex-col">
                       <label className="text-gray-700 font-semibold mb-1">
                         Mileage
