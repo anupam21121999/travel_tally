@@ -74,6 +74,7 @@ const Driverdashboard = () => {
   const closeModal = () => {
     setShowModal(false);
     setSelectedDriver(null);
+    setToggleButton(false);
   };
 
   const filteredDrivers = drivers.filter((driver) =>
@@ -205,195 +206,256 @@ const Driverdashboard = () => {
       </div>
 
       {/* Modal */}
-      {showModal && selectedDriver && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg p-6 max-w-lg w-full max-h-[100vh] overflow-y-auto relative">
-            <div className="relative flex justify-end items-center gap-4 p-2 rounded-md">
-              <GoPencil
-                onClick={() => visibleElement()}
-                className="size-6 cursor-pointer hover:text-black text-xl font-bold"
-              />
-              <MdDeleteOutline
-                onClick={() => setShowConfirmPopup1(true)}
-                className="size-6 cursor-pointer hover:text-black text-xl font-bold"
-              />
-              {showConfirmPopup1 && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                  <div className="bg-white p-6 rounded-lg shadow-lg text-center max-w-xs">
-                    <h2 className="text-lg font-semibold mb-4">
-                      Are you sure?
-                    </h2>
-                    <div className="flex justify-center gap-4">
-                      <button
-                        onClick={() => {
-                          deleteDrivers(selectedDriver._id);
-                          setShowConfirmPopup1(false);
-                        }}
-                        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+      <AnimatePresence>
+        {showModal && selectedDriver && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white rounded-xl p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto relative">
+              <div className="relative flex justify-end items-center gap-4 p-2 rounded-md">
+                <GoPencil
+                  onClick={() => visibleElement()}
+                  className="size-6 cursor-pointer hover:text-black text-xl font-bold"
+                />
+                <MdDeleteOutline
+                  onClick={() => setShowConfirmPopup1(true)}
+                  className="size-6 cursor-pointer hover:text-black text-xl font-bold"
+                />
+                <AnimatePresence>
+                  {showConfirmPopup1 && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+                    >
+                      <motion.div
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.8, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="bg-white p-6 rounded-lg shadow-lg text-center max-w-xs"
                       >
-                        Yes
-                      </button>
-                      <button
-                        onClick={() => setShowConfirmPopup1(false)}
-                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                      >
-                        No
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-              <button
-                onClick={closeModal}
-                className="text-white hover:text-black text-xl font-bold"
-              >
-                ✕
-              </button>
-            </div>
-            <h1 className="font-semibold mb-2">
-              {selectedDriver.firstName} {selectedDriver.lastName} Documents
-            </h1>
-            {toggleButton ? (
-              <div className="m-2 space-y-2">
-                <input
-                  type="text"
-                  className="border p-1 w-full"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  placeholder="First Name"
-                />
-                <input
-                  type="text"
-                  className="border p-1 w-full"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  placeholder="Last Name"
-                />
-                <input
-                  type="text"
-                  className="border p-1 w-full"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  placeholder="Address"
-                />
-                <input
-                  type="text"
-                  className="border p-1 w-full"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="Phone"
-                />
-                <input
-                  type="date"
-                  className="border p-1 w-full"
-                  value={joiningDate?.substring(0, 10)}
-                  onChange={(e) => setJoiningDate(e.target.value)}
-                  placeholder="Joining Date"
-                />
+                        <h2 className="text-lg font-semibold mb-4">
+                          Are you sure?
+                        </h2>
+                        <div className="flex justify-center gap-4">
+                          <button
+                            onClick={() => {
+                              deleteDrivers(selectedDriver._id);
+                              setShowConfirmPopup1(false);
+                            }}
+                            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                          >
+                            Yes
+                          </button>
+                          <button
+                            onClick={() => setShowConfirmPopup1(false)}
+                            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                          >
+                            No
+                          </button>
+                        </div>
+                      </motion.div>
+                    </motion.div>
+                  )}
+                  <button
+                    onClick={closeModal}
+                    className="text-white hover:text-black text-sm font-medium"
+                  >
+                    ✕
+                  </button>
+                </AnimatePresence>
               </div>
-            ) : (
-              <div className="m-2 space-y-1">
-                <h3>First Name: {selectedDriver.firstName}</h3>
-                <h3>Last Name: {selectedDriver.lastName}</h3>
-                <h3>Address: {selectedDriver.address}</h3>
-                <h3>Phone: {selectedDriver.phone}</h3>
-                <h3>
-                  Joining date:{" "}
-                  {new Date(selectedDriver.joiningDate).toLocaleDateString()}
-                </h3>
-              </div>
-            )}
+              <h1 className="font-semibold mb-2">
+                {selectedDriver.firstName} {selectedDriver.lastName} Documents
+              </h1>
+              {toggleButton ? (
+                <div className="m-2 space-y-4 animate-fade-in transition duration-500 ease-in-out">
+                  <label className="block font-semibold">First Name:</label>
+                  <input
+                    type="text"
+                    className="border p-2 w-full rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    placeholder="First Name"
+                  />
 
-            <div className="flex flex-row gap-10 w-auto">
-              {selectedDriver.aadhar[0] == null ? (
-                <div></div>
-              ) : (
-                <div>
-                  <p className="font-medium">Aadhar Front:</p>
-                  <img
-                    src={selectedDriver.aadhar[0]}
-                    alt="Aadhar Front"
-                    className="w-52 h-52 rounded"
+                  <label className="block font-semibold">Last Name:</label>
+                  <input
+                    type="text"
+                    className="border p-2 w-full rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    placeholder="Last Name"
+                  />
+
+                  <label className="block font-semibold">Address:</label>
+                  <input
+                    type="text"
+                    className="border p-2 w-full rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    placeholder="Address"
+                  />
+
+                  <label className="block font-semibold">Phone:</label>
+                  <input
+                    type="text"
+                    className="border p-2 w-full rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="Phone"
+                  />
+
+                  <label className="block font-semibold">Joining Date:</label>
+                  <input
+                    type="date"
+                    className="border p-2 w-full rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+                    value={joiningDate?.substring(0, 10)}
+                    onChange={(e) => setJoiningDate(e.target.value)}
+                    placeholder="Joining Date"
                   />
                 </div>
-              )}
-              {selectedDriver.aadhar[1] == null ? (
-                <div></div>
               ) : (
-                <div>
-                  <p className="font-medium">Aadhar Back:</p>
-                  <img
-                    src={selectedDriver.aadhar[1]}
-                    alt="Aadhar Back"
-                    className="w-52 h-52 rounded"
-                  />
+                <div className="m-2 space-y-2 animate-fade-in transition duration-500 ease-in-out bg-gray-50 p-4 rounded shadow">
+                  <h3 className="text-lg font-semibold">
+                    First Name:{" "}
+                    <span className="font-normal">
+                      {selectedDriver.firstName}
+                    </span>
+                  </h3>
+                  <h3 className="text-lg font-semibold">
+                    Last Name:{" "}
+                    <span className="font-normal">
+                      {selectedDriver.lastName}
+                    </span>
+                  </h3>
+                  <h3 className="text-lg font-semibold">
+                    Address:{" "}
+                    <span className="font-normal">
+                      {selectedDriver.address}
+                    </span>
+                  </h3>
+                  <h3 className="text-lg font-semibold">
+                    Phone:{" "}
+                    <span className="font-normal">{selectedDriver.phone}</span>
+                  </h3>
+                  <h3 className="text-lg font-semibold">
+                    Joining Date:{" "}
+                    <span className="font-normal">
+                      {new Date(
+                        selectedDriver.joiningDate
+                      ).toLocaleDateString()}
+                    </span>
+                  </h3>
                 </div>
               )}
-            </div>
-            <div className="flex flex-row gap-10 w-auto">
-              {selectedDriver.license[0] == null ? (
-                <div></div>
-              ) : (
-                <div>
-                  <p className="font-medium">License Front:</p>
-                  <img
-                    src={selectedDriver.license[0]}
-                    alt="License Front"
-                    className="w-52 h-52 rounded"
-                  />
-                </div>
-              )}
-              {selectedDriver.license[1] == null ? (
-                <div></div>
-              ) : (
-                <div>
-                  <p className="font-medium">License Back:</p>
-                  <img
-                    src={selectedDriver.license[1]}
-                    alt="License Back"
-                    className="w-52 h-52 rounded-md"
-                  />
-                </div>
-              )}
-            </div>
-            {toggleButton ? (
-              <button
-                onClick={() => setShowConfirmPopup(true)}
-                className="mt-2 justify-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-              >
-                Update
-              </button>
-            ) : (
-              <div></div>
-            )}
-            {showConfirmPopup && (
-              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                <div className="bg-white p-6 rounded-lg shadow-lg text-center max-w-xs">
-                  <h2 className="text-lg font-semibold mb-4">Are you sure?</h2>
-                  <div className="flex justify-center gap-4">
-                    <button
-                      onClick={() => {
-                        updateDriver(selectedDriver._id);
-                        setShowConfirmPopup(false);
-                      }}
-                      className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-                    >
-                      Yes
-                    </button>
-                    <button
-                      onClick={() => setShowConfirmPopup(false)}
-                      className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                    >
-                      No
-                    </button>
+
+              <div className="flex flex-row gap-10 w-auto">
+                {selectedDriver.aadhar[0] == null ? (
+                  <div></div>
+                ) : (
+                  <div>
+                    <p className="font-medium">Aadhar Front:</p>
+                    <img
+                      src={selectedDriver.aadhar[0]}
+                      alt="Aadhar Front"
+                      className="w-52 h-52 rounded"
+                    />
                   </div>
-                </div>
+                )}
+                {selectedDriver.aadhar[1] == null ? (
+                  <div></div>
+                ) : (
+                  <div>
+                    <p className="font-medium">Aadhar Back:</p>
+                    <img
+                      src={selectedDriver.aadhar[1]}
+                      alt="Aadhar Back"
+                      className="w-52 h-52 rounded"
+                    />
+                  </div>
+                )}
               </div>
-            )}
+              <div className="flex flex-row gap-10 w-auto">
+                {selectedDriver.license[0] == null ? (
+                  <div></div>
+                ) : (
+                  <div>
+                    <p className="font-medium">License Front:</p>
+                    <img
+                      src={selectedDriver.license[0]}
+                      alt="License Front"
+                      className="w-52 h-52 rounded"
+                    />
+                  </div>
+                )}
+                {selectedDriver.license[1] == null ? (
+                  <div></div>
+                ) : (
+                  <div>
+                    <p className="font-medium">License Back:</p>
+                    <img
+                      src={selectedDriver.license[1]}
+                      alt="License Back"
+                      className="w-52 h-52 rounded-md"
+                    />
+                  </div>
+                )}
+              </div>
+              {toggleButton ? (
+                <button
+                  onClick={() => setShowConfirmPopup(true)}
+                  className="mt-2 justify-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                >
+                  Update
+                </button>
+              ) : (
+                <div></div>
+              )}
+              <AnimatePresence>
+                {showConfirmPopup && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+                  >
+                    <motion.div
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0.8, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="bg-white p-6 rounded-lg shadow-lg text-center max-w-xs"
+                    >
+                      <h2 className="text-lg font-semibold mb-4">
+                        Are you sure?
+                      </h2>
+                      <div className="flex justify-center gap-4">
+                        <button
+                          onClick={() => {
+                            updateDriver(selectedDriver._id);
+                            setShowConfirmPopup(false);
+                          }}
+                          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                        >
+                          Yes
+                        </button>
+                        <button
+                          onClick={() => setShowConfirmPopup(false)}
+                          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                        >
+                          No
+                        </button>
+                      </div>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
-        </div>
-      )}
-    </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
