@@ -1,4 +1,4 @@
-import React from "react";
+import { AiOutlinePlus } from 'react-icons/ai';
 import { useState, useEffect } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
@@ -150,7 +150,8 @@ const Vehicledashboard = () => {
   };
 
   return (
-    <motion.div
+    <div className="w-screen min-h-screen bg-white text-black dark:bg-gray-950 dark:text-white">
+      <motion.div
       initial="initial"
       animate="in"
       exit="out"
@@ -158,17 +159,22 @@ const Vehicledashboard = () => {
       transition={pageTransition}
     >
       <Toaster position="bottom-center" reverseOrder={false} />
-      <div className="min-h-screen flex justify-center items-start pt-8 mt-40">
+      <div className="flex justify-center items-start pt-8 mt-40">
         <div className="p-4 w-full max-w-6xl">
           <div className="flex flex-row gap-2 w-auto h-auto">
             <input
-              className="flex-grow h-10 rounded-lg border px-3"
+              className="flex-grow h-10 rounded-lg border px-3
+              border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-900
+              dark:border-white dark:bg-gray-950 dark:text-white dark:placeholder-white dark:focus:ring-white"
               type="text"
               placeholder="Search vehicles..."
               onChange={(e) => setSearch(e.target.value)}
             />
             <Link to="/vehicle_detail">
-              <button className="h-10 px-4 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors">
+              <button className="flex items-center gap-2 px-4 py-2  rounded-lg font-semibold transition-colors duration-300
+              bg-black text-white hover:bg-gray-700 
+              dark:bg-white dark:text-black dark:hover:bg-gray-700 dark:hover:text-white">
+                <AiOutlinePlus className='text-lg'/>
                 Add Vehicle Details
               </button>
             </Link>
@@ -180,23 +186,24 @@ const Vehicledashboard = () => {
                   <div
                     key={item._id}
                     onClick={() => open(item)}
-                    className="bg-white shadow-md rounded-xl p-4 border hover:shadow-lg transition-shadow duration-300"
+                    className="bg-white shadow-md rounded-xl p-4 border-2 border-transparent hover:shadow-xl transition-all duration-300
+                    dark:bg-gray-800 dark:border-white dark:hover:border-2"
                   >
-                    <h3 className="text-lg font-semibold text-gray-800">
+                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
                       Model: {item.model}
                     </h3>
-                    <p className="text-gray-600">Color: {item.color}</p>
-                    <p className="text-gray-600">Year: {item.year}</p>
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 dark:text-gray-300">Color: {item.color}</p>
+                    <p className="text-gray-600 dark:text-gray-300">Year: {item.year}</p>
+                    <p className="text-gray-600 dark:text-gray-300">
                       Registration No: {item.registrationNumber}
                     </p>
-                    <p className="text-gray-600">Total KMs: {item.totalKms}</p>
-                    <p className="text-gray-600">Mileage: {item.mileage}</p>
+                    <p className="text-gray-600 dark:text-gray-300">Total KMs: {item.totalKms}</p>
+                    <p className="text-gray-600 dark:text-gray-300">Mileage: {item.mileage}</p>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-center text-lg text-gray-500">
+              <p className="text-center text-lg">
                 No Vehicles Found.
               </p>
             )}
@@ -403,6 +410,7 @@ const Vehicledashboard = () => {
         )}
       </AnimatePresence>
     </motion.div>
+    </div>
   );
 };
 
