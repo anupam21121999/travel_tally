@@ -159,7 +159,7 @@ const Vehicledashboard = () => {
       transition={pageTransition}
     >
       <Toaster position="bottom-center" reverseOrder={false} />
-      <div className="flex justify-center items-start pt-8 mt-40">
+      <div className="min-h-screen flex justify-center items-start pt-8 mt-52">
         <div className="p-4 w-full max-w-6xl">
           <div className="flex flex-row gap-2 w-auto h-auto">
             <input

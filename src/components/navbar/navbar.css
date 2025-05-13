@@ -1,0 +1,49 @@
+.navbar {
+  background: linear-gradient(#36454F, #353935);
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000; /* Ensures it stays on top of other content */
+}
+
+/* Add top padding/margin to body or page content to prevent overlap */
+body {
+  margin: 0;
+  padding-top: 80px; /* Adjust based on navbar height */
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.nav-item {
+  color: white;
+  text-decoration: none;
+  margin-left: 1.5rem;
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.nav-item-left {
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.3s ease;
+  float: left;
+}
+
+.nav-item:hover {
+  color: #f0c040;
+}
+
+.page-heading {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 2rem;
+}
