@@ -19,6 +19,7 @@ import Dashboard from "../dashboard/Dashboard";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Client from "../client_page/Client";
 import ClientDetail from "../client_page/ClientDetail";
+import RateDashboard from "../rate_details/RateDashboard";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -44,6 +45,7 @@ const AnimatedRoutes = () => {
           <Route path="/vehicle_detail" element={<Vehicledetail />} />
           <Route path="/clients" element={<Client />} />
           <Route path="/client_register" element={<ClientDetail />} />
+          <Route path="/rate_dashboard" element={<RateDashboard />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
