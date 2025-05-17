@@ -15,7 +15,7 @@ const pageVariants = {
 const pageTransition = {
   type: "tween",
   ease: "easeInOut",
-  duration: 0.5,
+  duration: 0.3,
 };
 
 const Vehicledashboard = () => {
@@ -150,7 +150,6 @@ const Vehicledashboard = () => {
   };
 
   return (
-    <div className="w-screen min-h-screen bg-white text-black dark:bg-gray-950 dark:text-white">
       <motion.div
       initial="initial"
       animate="in"
@@ -158,9 +157,10 @@ const Vehicledashboard = () => {
       variants={pageVariants}
       transition={pageTransition}
     >
-      <Toaster position="bottom-center" reverseOrder={false} />
-      <div className="min-h-screen flex justify-center items-start pt-8 mt-52">
-        <div className="p-4 w-full max-w-6xl">
+      <div className="w-screen min-h-screen bg-white text-black dark:bg-gray-950 dark:text-white">
+        <Toaster position="bottom-center" reverseOrder={false} />
+      <div className="flex justify-center items-start pt-32">
+        <div className="px-4 w-full max-w-6xl">
           <div className="flex flex-row gap-2 w-auto h-auto">
             <input
               className="flex-grow h-10 rounded-lg border px-3
@@ -186,7 +186,7 @@ const Vehicledashboard = () => {
                   <div
                     key={item._id}
                     onClick={() => open(item)}
-                    className="bg-white shadow-md rounded-xl p-4 border-2 border-transparent hover:shadow-xl transition-all duration-300
+                    className="bg-white shadow-xl rounded-xl p-4 border-2 border-transparent hover:shadow-xl transition-all duration-300
                     dark:bg-gray-800 dark:border-white dark:hover:border-2"
                   >
                     <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
@@ -213,16 +213,16 @@ const Vehicledashboard = () => {
 
       <AnimatePresence>
         {showModal && selectedVehicle && (
-          <div className="fixed inset-0 z-50 flex justify-center items-start pt-24 bg-black bg-opacity-50 overflow-y-auto">
+          <div className="fixed inset-0 z-50 flex justify-center items-start pt-24 bg-black bg-opacity-70 overflow-y-auto">
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.1 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
+              exit={{ opacity: 0, scale: 0.1 }}
               transition={{ duration: 0.3 }}
-              className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-md relative"
+              className="bg-white rounded-2xl p-6 w-full max-w-md relative dark:bg-gray-950 dark:text-white border-2 border-transparent dark:border-gray-300"
             >
               {/* Close & Delete Buttons */}
-              <div className="absolute top-3 right-3 flex gap-2">
+              <div className="absolute top-3 right-3 flex gap-4">
                 <GoPencil
                   onClick={() => visibleElement()}
                   title="Update Vehicle"
@@ -231,12 +231,12 @@ const Vehicledashboard = () => {
                 <MdDeleteOutline
                   onClick={() => setShowPopup(true)}
                   title="Delete Vehicle"
-                  className="size-6 mt-1 text-red-500 cursor-pointer hover:text-red-700 transition"
+                  className="size-6 mt-1 text-red-500 cursor-pointer hover:text-red-700 transition-all duration-300 text-xl font-bold"
                 />
                 {showPopup && (
                   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white p-6 rounded-lg shadow-lg text-center max-w-xs">
-                      <h2 className="text-lg font-semibold mb-4">
+                    <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg text-center max-w-xs border border-transparent dark:border-gray-300">
+                      <h2 className="text-lg text-gray-900 dark:text-white font-semibold mb-4">
                         Are you sure?
                       </h2>
 
@@ -251,13 +251,13 @@ const Vehicledashboard = () => {
                             deleteVehicle(selectedVehicle._id);
                             setShowPopup(false);
                           }}
-                          className="bg-green-500 text-white px-3 py-2 rounded-md hover:bg-green-600"
+                          className="bg-green-500 text-white px-3 py-2 rounded-xl hover:bg-green-600"
                         >
                           Yes
                         </button>
                         <button
                           onClick={() => setShowPopup(false)}
-                          className="bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-800"
+                          className="bg-red-500 text-white px-3 py-2 rounded-xl hover:bg-red-800"
                         >
                           No
                         </button>
@@ -267,66 +267,76 @@ const Vehicledashboard = () => {
                 )}
                 <button
                   onClick={() => close()}
-                  className="text-white hover:text-black text-sm font-bold focus:outline-none"
+                  className="text-white dark:text-black w-9 bg-gray-900 dark:bg-gray-100 rounded-full hover:bg-gray-400 dark:hover:bg-gray-600 dark:hover:text-white text-sm font-bold p-2 transition-all duration-250"
                   title="Close"
                 >
                   ✕
                 </button>
               </div>
               {toggleButton ? (
-                <div className="max-w-md mx-auto bg-white p-6 rounded-2xl shadow-lg">
-                  <div className="mb-6 text-center">
+                <div className="max-w-md mx-auto bg-white dark:bg-gray-950 p-6 rounded-2xl shadow-lg">
+                  <div className="mb-6 text-left text-xl font-bold">
                     <label>Model:</label>
                     <input
-                      className="w-full text-2xl font-bold text-gray-800 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 mb-2 text-center"
+                      className="w-full text-2xl text-center rounded-lg border
+                      border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-950
+                      dark:border-white dark:bg-gray-900 dark:text-white dark:placeholder-white dark:focus:ring-white"
                       value={model}
                       onChange={(e) => setModel(e.target.value)}
                       placeholder="Enter Model"
                     />
-                    <p className="text-sm text-gray-600 font-semibold">
+                    <p className="text-base text-gray-600 dark:text-gray-200 font-semibold">
                       Registration No: {selectedVehicle.registrationNumber}
                     </p>
                   </div>
 
                   <div className="space-y-4">
                     <div className="flex flex-col">
-                      <label className="text-gray-700 font-semibold mb-1">
+                      <label className="text-gray-600 dark:text-gray-200 font-semibold mb-1">
                         Color
                       </label>
                       <input
-                        className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        className="border
+                      border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-950
+                      dark:border-white dark:bg-gray-900 dark:text-white dark:placeholder-white dark:focus:ring-white"
                         value={color}
                         onChange={(e) => setColor(e.target.value)}
                       />
                     </div>
 
                     <div className="flex flex-col">
-                      <label className="text-gray-700 font-semibold mb-1">
+                      <label className="text-gray-600 dark:text-gray-200 font-semibold mb-1">
                         Year
                       </label>
                       <input
-                        className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        className="border
+                      border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-950
+                      dark:border-white dark:bg-gray-900 dark:text-white dark:placeholder-white dark:focus:ring-white"
                         value={year}
                         onChange={(e) => setYear(e.target.value)}
                       />
                     </div>
 
                     <div className="flex flex-col">
-                      <label className="text-gray-700 font-semibold mb-1">
+                      <label className="text-gray-600 dark:text-gray-200 font-semibold mb-1">
                         Total KMs
                       </label>
                       <input
-                        className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        className="border
+                      border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-950
+                      dark:border-white dark:bg-gray-900 dark:text-white dark:placeholder-white dark:focus:ring-white"
                         value={km}
                         onChange={(e) => setKm(e.target.value)}
                       />
                     </div>
                     <div className="flex flex-col">
-                      <label className="text-gray-700 font-semibold mb-1">
+                      <label className="text-gray-600 dark:text-gray-200 font-semibold mb-1">
                         Mileage
                       </label>
                       <input
-                        className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        className="border
+                      border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-950
+                      dark:border-white dark:bg-gray-900 dark:text-white dark:placeholder-white dark:focus:ring-white"
                         value={mileage}
                         onChange={(e) => setMileage(e.target.value)}
                       />
@@ -336,14 +346,17 @@ const Vehicledashboard = () => {
                   <div className="mt-6 text-right">
                     <button
                       onClick={() => setShowPopup1(true)}
-                      className="bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition"
+                      className="bg-gray-950 dark:bg-white
+                       text-white dark:text-black 
+                       px-3 py-2 font-semibold rounded-xl
+                       hover:bg-gray-400 dark:hover:bg-gray-800 dark:hover:text-white transition-all duration-300"
                     >
                       Update
                     </button>
                     {showPopup1 && (
                       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                        <div className="bg-white p-6 rounded-lg shadow-lg text-center max-w-xs">
-                          <h2 className="text-lg font-semibold mb-4">
+                        <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg text-center max-w-xs border border-transparent dark:border-gray-300">
+                          <h2 className="text-lg text-gray-950 dark:text-white font-semibold mb-4">
                             Are you sure?
                           </h2>
 
@@ -358,13 +371,13 @@ const Vehicledashboard = () => {
                                 updateVehicle(selectedVehicle._id);
                                 setShowPopup1(false);
                               }}
-                              className="bg-green-500 text-white px-3 py-2 rounded-md hover:bg-green-600"
+                              className="bg-green-500 text-white px-3 py-2 rounded-xl hover:bg-green-600"
                             >
                               Yes
                             </button>
                             <button
                               onClick={() => setShowPopup1(false)}
-                              className="bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-800"
+                              className="bg-red-500 text-white px-3 py-2 rounded-xl hover:bg-red-800"
                             >
                               No
                             </button>
@@ -376,30 +389,30 @@ const Vehicledashboard = () => {
                 </div>
               ) : (
                 <div>
-                  <div className="mb-4 text-center">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-1">
+                  <div className="pt-3 mb-4 text-center">
+                    <h2 className="text-2xl font-bold text-gray-950 dark:text-white mb-1">
                       {selectedVehicle.model}
                     </h2>
-                    <p className="text-sm text-gray-800 text-semibold">
+                    <p className="text-sm text-gray-800 dark:text-gray-200 text-semibold">
                       Registration No: {selectedVehicle.registrationNumber}
                     </p>
                   </div>
 
-                  <div className="space-y-2">
-                    <p className="text-gray-700">
-                      <span className="font-semibold">Color:</span>{" "}
+                  <div className="space-y-2 text-gray-700 dark:text-gray-200 font-semibold">
+                    <p >
+                      <span>Color:</span>{" "}
                       {selectedVehicle.color}
                     </p>
-                    <p className="text-gray-700">
-                      <span className="font-semibold">Year:</span>{" "}
+                    <p >
+                      <span>Year:</span>{" "}
                       {selectedVehicle.year}
                     </p>
-                    <p className="text-gray-700">
-                      <span className="font-semibold">Total KMs:</span>{" "}
+                    <p >
+                      <span>Total KMs:</span>{" "}
                       {selectedVehicle.totalKms}
                     </p>
-                    <p className="text-gray-700">
-                      <span className="font-semibold">Mileage:</span>{" "}
+                    <p >
+                      <span>Mileage:</span>{" "}
                       {selectedVehicle.mileage}
                     </p>
                   </div>
@@ -409,8 +422,8 @@ const Vehicledashboard = () => {
           </div>
         )}
       </AnimatePresence>
+      </div>
     </motion.div>
-    </div>
   );
 };
 

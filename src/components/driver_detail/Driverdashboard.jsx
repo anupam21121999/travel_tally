@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { GoPencil } from "react-icons/go";
+import { AiOutlinePlus } from 'react-icons/ai';
 import { MdDeleteOutline } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
@@ -14,7 +15,7 @@ const pageVariants = {
 const pageTransition = {
   type: "tween",
   ease: "easeInOut",
-  duration: 0.5,
+  duration: 0.3,
 };
 
 const Driverdashboard = () => {
@@ -148,26 +149,32 @@ const Driverdashboard = () => {
   };
 
   return (
-    <motion.div
+      <motion.div
       initial="initial"
       animate="in"
       exit="out"
       variants={pageVariants}
       transition={pageTransition}
     >
-      <Toaster position="bottom-center" reverseOrder={false} />
-      <div className="min-h-screen flex justify-center items-start pt-8 mt-52">
-        <div className="w-full max-w-6xl">
+      <div className="w-screen min-h-screen bg-white text-black dark:bg-gray-950 dark:text-white">
+        <Toaster position="bottom-center" reverseOrder={false} />
+      <div className="flex justify-center items-start pt-36">
+        <div className="px-4 w-full max-w-6xl">
           {/* Top Search & Add Driver Section */}
           <div className="flex flex-row gap-2 w-auto h-auto">
             <input
               type="text"
               placeholder="Search drivers..."
-              className="flex-grow h-10 rounded-lg border px-3"
+              className="flex-grow h-10 rounded-lg border px-3
+              border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-900
+              dark:border-white dark:bg-gray-950 dark:text-white dark:placeholder-white dark:focus:ring-white"
               onChange={(e) => setSearch(e.target.value)}
             />
             <Link to="/driver_details1">
-              <button className="h-10 px-4 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors">
+              <button className="flex items-center gap-2 px-4 py-2  rounded-lg font-semibold transition-colors duration-300
+              bg-black text-white hover:bg-gray-700 
+              dark:bg-white dark:text-black dark:hover:bg-gray-700 dark:hover:text-white">
+                <AiOutlinePlus className="text-lg" />
                 Add Driver Details
               </button>
             </Link>
@@ -181,12 +188,13 @@ const Driverdashboard = () => {
                   <div
                     key={driver._id}
                     onClick={() => openModal(driver)}
-                    className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-start cursor-pointer hover:shadow-xl transition"
+                    className="bg-white shadow-xl rounded-xl p-4 border-2 border-transparent hover:shadow-xl transition-all duration-300
+                    dark:bg-gray-800 dark:border-white dark:hover:border-2"
                   >
-                    <h3 className="text-xl font-semibold text-gray-700 mb-4">
+                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
                       {driver.firstName} {driver.lastName}
                     </h3>
-                    <div className="space-y-2 text-sm text-gray-600 flex-1">
+                    <div className="text-gray-600 dark:text-gray-300">
                       <p className="break-words">
                         <strong>Phone:</strong> {driver.phone}
                       </p>
@@ -460,6 +468,7 @@ const Driverdashboard = () => {
           </div>
         )}
       </AnimatePresence>
+      </div>
     </motion.div>
   );
 };

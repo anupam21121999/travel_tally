@@ -3,6 +3,24 @@ import { useState, useRef } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+import { motion, AnimatePresence } from "framer-motion";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+const pageVariants = {
+  initial: { x: "100vw", opacity: 0 },
+  in: { x: 0, opacity: 1 },
+  out: { x: "-100vw", opacity: 0 },
+};
+
+const pageTransition = {
+  type: "tween",
+  ease: "easeInOut",
+  duration: 0.3,
+};
 
 const Vehicledetail = () => {
   const navigate = useNavigate();
@@ -105,54 +123,85 @@ const Vehicledetail = () => {
   };
 
   return (
-    <>
-      <Toaster position="top-center" reverseOrder={false} />
-      <div className="flex justify-center items-start min-h-screen py-10 px-6 mt-4">
-        <div className="w-full max-w-3xl p-8 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-y-auto max-h-[90vh] mt-10">
-          <h1 className="text-xl font-bold mb-4 m-2 p-2 subpixel-antialiased font-sans items-center justify-center align-middle">
-            Vehicle Registration
-          </h1>
-          <form onSubmit={registerDriver}>
-            <input
+    <motion.div
+      initial="initial"
+      animate="in"
+      exit="out"
+      variants={pageVariants}
+      transition={pageTransition}
+      className="h-screen w-screen bg-white dark:bg-gray-900 text-black dark:text-white overflow-auto"
+    >
+      <Toaster position="bottom-center" reverseOrder={false} />
+        <div className="px-4 mt-20 pb-16"> 
+          <form onSubmit={registerDriver} className="max-w-2xl mx-auto">
+
+            <h1 className="text-4xl text-center font-bold font-sans p-5">
+              Vehicle Registration
+            </h1>
+
+            <label className="block text-xl font-bold mb-1">
+                Enter Vehicle Model :
+            </label>
+            <input required
               ref={inputrefs[0]}
               onKeyDown={(e) => handleKeyNext(e, 0)}
               value={model}
               onChange={(e) => setModel(e.target.value)}
               type="text"
-              placeholder="Enter vehicle model"
+              placeholder="Vehicle model"
+              className="flex-grow rounded-lg border px-3 mb-6 placeholder:text-gray-400 dark:placeholder:text-gray-600
+              border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-900
+              dark:border-white dark:bg-gray-950 dark:text-white dark:placeholder-white dark:focus:ring-white"
             />
-            <input
+
+
+            <label className="block mb-1 text-xl font-bold">
+                Enter Vehicle Color :
+            </label>
+            <input required
               ref={inputrefs[1]}
               onKeyDown={(e) => handleKeyNext(e, 1)}
               value={color}
               onChange={(e) => setColor(e.target.value)}
               type="text"
-              placeholder="Enter color"
+              placeholder="Vehicle color"
+              className="flex-grow rounded-lg border px-3 mb-6 placeholder:text-gray-400 dark:placeholder:text-gray-600
+              border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-900
+              dark:border-white dark:bg-gray-950 dark:text-white dark:placeholder-white dark:focus:ring-white"
             />
-            <label
-              htmlFor="purchase"
-              className="block mb-1 text-sm font-medium text-gray-700"
-            >
-              Enter Purchasing Date
+
+
+            <label className="block mb-1 text-xl font-bold">
+                Enter Purchasing Date :
             </label>
-            <input
+            <input required
               id="purchase"
               ref={inputrefs[2]}
               onKeyDown={(e) => handleKeyNext(e, 2)}
               value={year}
               onChange={(e) => setYear(e.target.value)}
-              type="text"
-              className="border px-2 py-1 rounded"
+              type="date"
+              placeholder="Purchasing date"
+              className="flex-grow rounded-lg border px-3 mb-6 placeholder:text-gray-400 dark:placeholder:text-gray-600
+              border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-900
+              dark:border-white dark:bg-gray-950 dark:text-white dark:placeholder-white dark:focus:ring-white"
             />
-            <select
+
+            <label className="block mb-1 text-xl font-bold">
+                Select Vehicle Type :
+            </label>
+            <select required
               ref={inputrefs[3]}
               onKeyDown={(e) => handleKeyNext(e, 3)}
               id="dropdown"
               value={type}
               onChange={(e) => setType(e.target.value)}
-              className="mb-2 w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-gray-800"
+              placeholder="Select Vehicle Type"
+              className="h-12 px-3 rounded-lg border mb-6 placeholder:text-gray-400 dark:placeholder:text-gray-600
+              border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-900
+              dark:border-white dark:bg-gray-950 dark:text-white dark:placeholder-white dark:focus:ring-white"
             >
-              <option value="">Vehicle Type</option>
+              <option value="">Select Vehicle Type</option>
               <option value="Hatchback">Hatchback</option>
               <option value="SUV">SUV</option>
               <option value="Sedan">Sedan</option>
@@ -165,161 +214,67 @@ const Vehicledetail = () => {
               <option value="Mini-Bus">Mini-Bus</option>
             </select>
 
-            <select
+
+            <label className="block mb-1 text-xl font-bold">
+                Select Fuel Type :
+            </label>
+            <select required
               ref={inputrefs[4]}
               onKeyDown={(e) => handleKeyNext(e, 4)}
               id="dropdown"
               value={fuelType}
               onChange={(e) => setFuelType(e.target.value)}
-              className="mb-2 w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-gray-800"
+              className="h-12 px-3 rounded-lg border mb-6
+              border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-900
+              dark:border-white dark:bg-gray-950 dark:text-white dark:placeholder-white dark:focus:ring-white"
             >
-              <option value="">Fuel Type</option>
+              <option value="">Select Fuel Type</option>
               <option value="Petrol">Petrol</option>
               <option value="Diesel">Diesel</option>
               <option value="Petrol/CNG">Petrol/CNG</option>
               <option value="EV">EV</option>
             </select>
-            <input
+
+
+            <label className="block mb-1 text-xl font-bold">
+                Enter registration number :
+            </label>
+            <input required
               ref={inputrefs[5]}
               onKeyDown={(e) => handleKeyNext(e, 5)}
               value={regNo}
               onChange={(e) => setRegNo(e.target.value)}
               type="text"
-              placeholder="Enter registration number"
+              placeholder="Registration number"
+              className="flex-grow rounded-lg border px-3 mb-6 placeholder:text-gray-400 dark:placeholder:text-gray-600
+              border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-900
+              dark:border-white dark:bg-gray-950 dark:text-white dark:placeholder-white dark:focus:ring-white"
             />
 
-            <label
-              htmlFor="fitness-expiry"
-              className="block mb-1 text-sm font-medium text-gray-700"
-            >
-              Enter Fitness Expiry
-            </label>
-            <input
-              id="fitness-expiry"
-              ref={inputrefs[6]}
-              onKeyDown={(e) => handleKeyNext(e, 6)}
-              value={fitness}
-              onChange={(e) => setFitness(e.target.value)}
-              type="text"
-              className="border px-2 py-1 rounded"
-            />
-            <label
-              htmlFor="permit-expiry"
-              className="block mb-1 text-sm font-medium text-gray-700"
-            >
-              Enter Permit Expiry
-            </label>
-            <input
-              id="permit-expiry"
-              ref={inputrefs[7]}
-              onKeyDown={(e) => handleKeyNext(e, 7)}
-              value={permit}
-              onChange={(e) => setPermit(e.target.value)}
-              type="text"
-              className="border px-2 py-1 rounded"
-            />
-            <label
-              htmlFor="insurance-expiry"
-              className="block mb-1 text-sm font-medium text-gray-700"
-            >
-              Enter Insurance Expiry
-            </label>
-            <input
-              id="insurance-expiry"
-              ref={inputrefs[8]}
-              onKeyDown={(e) => handleKeyNext(e, 8)}
-              value={insurance}
-              onChange={(e) => setInsurance(e.target.value)}
-              type="text"
-              className="border px-2 py-1 rounded"
-            />
-            <label
-              htmlFor="pollution-expiry"
-              className="block mb-1 text-sm font-medium text-gray-700"
-            >
-              Enter Pollution Expiry
-            </label>
-            <input
-              id="pollution-expiry"
-              ref={inputrefs[9]}
-              onKeyDown={(e) => handleKeyNext(e, 9)}
-              value={pollution}
-              onChange={(e) => setPollution(e.target.value)}
-              type="text"
-              className="border px-2 py-1 rounded"
-            />
-            <label
-              htmlFor="last-service-date"
-              className="block mb-1 text-sm font-medium text-gray-700"
-            >
-              Enter Last Service Date
-            </label>
-            <input
-              id="last-service-date"
-              ref={inputrefs[10]}
-              onKeyDown={(e) => handleKeyNext(e, 10)}
-              value={lastService}
-              onChange={(e) => setLastService(e.target.value)}
-              type="text"
-              className="border px-2 py-1 rounded"
-            />
-            <input
-              ref={inputrefs[11]}
-              onKeyDown={(e) => handleKeyNext(e, 11)}
-              value={km}
-              onChange={(e) => setKm(e.target.value)}
-              type="text"
-              placeholder="Enter total K.M."
-            />
-            <input
-              ref={inputrefs[12]}
-              onKeyDown={(e) => handleKeyNext(e, 12)}
-              value={mileage}
-              onChange={(e) => setMileage(e.target.value)}
-              type="text"
-              placeholder="Enter Mileage"
-            />
-            <div className="col-span-2">
-              <label
-                htmlFor="description"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Description
+
+            <div className="col-span-2 mb-6">
+              <label className="block mb-1 text-xl font-bold">
+                Usage Type :
               </label>
-              <textarea
-                typeof="text"
-                ref={inputrefs[13]}
-                onKeyDown={(e) => handleKeyNext(e, 13)}
-                id="description"
-                rows="4"
-                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter additional vehicle information..."
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </div>
-            <div className="flex flex-row gap-10">
-              <label
-                className="flex items-center gap-2 cursor-pointer"
-                htmlFor="commercial"
-              >
+              <div className="flex flex-row gap-20 pl-2">
+                <label className="flex items-center gap-3 cursor-pointer text-xl font-semibold">
                 <input
-                  className="mt-3"
                   type="radio"
                   value={true}
                   name="category"
                   checked={category === true}
                   onChange={(e) => setCategory(true)}
+                  className="w-5 h-5 mt-4 accent-black dark:accent-white"
                 />
                 Commercial
               </label>
 
               <label
-                className="flex items-center ml-4 gap-2 cursor-pointer"
+                className="flex items-center gap-3 cursor-pointer text-xl font-semibold"
                 htmlFor="non-commercial"
               >
                 <input
-                  className="mt-3"
+                  className="w-5 h-5 mt-4 accent-black dark:accent-white"
                   type="radio"
                   value={false}
                   name="category"
@@ -328,7 +283,144 @@ const Vehicledetail = () => {
                 />
                 Non-Commercial
               </label>
+              </div>
             </div>
+
+
+            <label className="block mb-1 text-xl font-bold">
+                Enter Fitness Expiry :
+            </label>
+            <input
+              id="fitness-expiry"
+              ref={inputrefs[6]}
+              onKeyDown={(e) => handleKeyNext(e, 6)}
+              value={fitness}
+              onChange={(e) => setFitness(e.target.value)}
+              type="text"
+              placeholder="Fitness expiry"
+              className="flex-grow rounded-lg border px-3 mb-6 placeholder:text-gray-400 dark:placeholder:text-gray-600
+              border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-900
+              dark:border-white dark:bg-gray-950 dark:text-white dark:placeholder-white dark:focus:ring-white"
+            />
+
+
+            <label className="block mb-1 text-xl font-bold">
+              Enter Permit Expiry :
+            </label>
+            <input
+              id="permit-expiry"
+              ref={inputrefs[7]}
+              onKeyDown={(e) => handleKeyNext(e, 7)}
+              value={permit}
+              onChange={(e) => setPermit(e.target.value)}
+              type="text"
+              placeholder="Permit expiry"
+              className="flex-grow rounded-lg border px-3 mb-6 placeholder:text-gray-400 dark:placeholder:text-gray-600
+              border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-900
+              dark:border-white dark:bg-gray-950 dark:text-white dark:placeholder-white dark:focus:ring-white"
+            />
+
+
+            <label className="block mb-1 text-xl font-bold">
+              Enter Insurance Expiry :
+            </label>
+            <input
+              id="insurance-expiry"
+              ref={inputrefs[8]}
+              onKeyDown={(e) => handleKeyNext(e, 8)}
+              value={insurance}
+              onChange={(e) => setInsurance(e.target.value)}
+              type="text"
+              placeholder="Insurance expiry"
+              className="flex-grow rounded-lg border px-3 mb-6 placeholder:text-gray-400 dark:placeholder:text-gray-600
+              border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-900
+              dark:border-white dark:bg-gray-950 dark:text-white dark:placeholder-white dark:focus:ring-white"
+            />
+
+
+            <label className="block mb-1 text-xl font-bold">
+              Enter Pollution Expiry :
+            </label>
+            <input
+              id="pollution-expiry"
+              ref={inputrefs[9]}
+              onKeyDown={(e) => handleKeyNext(e, 9)}
+              value={pollution}
+              onChange={(e) => setPollution(e.target.value)}
+              type="text"
+              placeholder="Pollution expiry"
+              className="flex-grow rounded-lg border px-3 mb-6 placeholder:text-gray-400 dark:placeholder:text-gray-600
+              border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-900
+              dark:border-white dark:bg-gray-950 dark:text-white dark:placeholder-white dark:focus:ring-white"
+            />
+
+
+            <label className="block mb-1 text-xl font-bold">
+              Enter Last Service Date :
+            </label>
+            <input
+              id="last-service-date"
+              ref={inputrefs[10]}
+              onKeyDown={(e) => handleKeyNext(e, 10)}
+              value={lastService}
+              onChange={(e) => setLastService(e.target.value)}
+              type="text"
+              placeholder="Last service date"
+              className="flex-grow rounded-lg border px-3 mb-6 placeholder:text-gray-400 dark:placeholder:text-gray-600
+              border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-900
+              dark:border-white dark:bg-gray-950 dark:text-white dark:placeholder-white dark:focus:ring-white"
+            />
+
+            <label className="block mb-1 text-xl font-bold">
+              Enter total kilometers :
+            </label>
+            <input
+              ref={inputrefs[11]}
+              onKeyDown={(e) => handleKeyNext(e, 11)}
+              value={km}
+              onChange={(e) => setKm(e.target.value)}
+              type="text"
+              placeholder="Total Kilometers"
+              className="flex-grow rounded-lg border px-3 mb-6 placeholder:text-gray-400 dark:placeholder:text-gray-600
+              border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-900
+              dark:border-white dark:bg-gray-950 dark:text-white dark:placeholder-white dark:focus:ring-white"
+            />
+
+            <label className="block mb-1 text-xl font-bold">
+              Enter Mileage :
+            </label>
+            <input
+              ref={inputrefs[12]}
+              onKeyDown={(e) => handleKeyNext(e, 12)}
+              value={mileage}
+              onChange={(e) => setMileage(e.target.value)}
+              type="text"
+              placeholder="Mileage"
+              className="flex-grow rounded-lg border px-3 mb-6 placeholder:text-gray-400 dark:placeholder:text-gray-600
+              border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-900
+              dark:border-white dark:bg-gray-950 dark:text-white dark:placeholder-white dark:focus:ring-white"
+            />
+
+
+            <div className="col-span-2 mb-10">
+              <label className="block mb-1 text-xl font-bold">
+                Description :
+              </label>
+              <textarea
+                typeof="text"
+                ref={inputrefs[13]}
+                onKeyDown={(e) => handleKeyNext(e, 13)}
+                id="description"
+                rows="4"
+                className="w-full rounded-lg border p-3 mb-6 placeholder:text-gray-400 dark:placeholder:text-gray-600
+              border-black placeholder-black focus:outline-none focus:ring-2 focus:ring-gray-900
+              dark:border-white dark:bg-gray-950 dark:text-white dark:placeholder-white dark:focus:ring-white"
+                placeholder="Enter additional vehicle information..."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
+
             {loading ? (
               <div
                 style={{
@@ -347,12 +439,17 @@ const Vehicledetail = () => {
                 <ClipLoader color="#36d7b7" size={60} />
               </div>
             ) : (
-              <button type="submit">Submit</button>
+              <button type="submit" className="w-full h-14 text-2xl
+              rounded-full font-semibold transition-colors duration-300
+              bg-black text-white hover:bg-gray-700 
+              dark:bg-white dark:text-black dark:hover:bg-gray-700 dark:hover:text-white">
+                Submit
+              </button>
             )}
+            
           </form>
         </div>
-      </div>
-    </>
+    </motion.div>
   );
 };
 
